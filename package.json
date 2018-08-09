@@ -1,0 +1,24 @@
+{
+  "name": "rest-api-practice",
+  "version": "1.0.0",
+  "description": "- If you use macOS, in your terminal, typed \"cd/\" - It will go to \"/ borlandtien$\" (your home based on your personal computer's name) - Then \"mkdir data\" or \"sudo mkdir data\" (force to make a directory - named data) - [\"mongod --dbpath data/\"](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#specify-the-path-of-the-data-directory) - When you see \"[initandlisten] waiting for connections on port 27017\" - which means MongoDB has started successfully",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguy2819/REST-API-practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nguy2819/REST-API-practice/issues"
+  },
+  "homepage": "https://github.com/nguy2819/REST-API-practice#readme"
+}

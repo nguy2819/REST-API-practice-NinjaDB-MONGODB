@@ -42,4 +42,4 @@ app.listen(4000, function(){
 ## HTTP Status Codes:
 - Ex: 200 means OK; 404 means Resource Not Found; 500 means server error
 
-REST-API TUTORIAL from [The Net Ninja](https://www.youtube.com/watch?v=BRdcRFvuqsE&list=PL4cUxeGkcC9jBcybHMTIia56aV21o2cZ8)
+* REST-API TUTORIAL from [The Net Ninja](https://www.youtube.com/watch?v=BRdcRFvuqsE&list=PL4cUxeGkcC9jBcybHMTIia56aV21o2cZ8)
