@@ -1,9 +1,9 @@
 ### Step 1: Download MongoDB
 - If you use macOS, in your terminal, typed "cd/"
 - It will go to "/ borlandtien$" (your home based on your personal computer's name)
-- Then "mkdir data" or "sudo mkdir data" (force to make a directory - named data)
+- In your home base, then "mkdir data" or "sudo mkdir data" (force to make a directory - named data)
 - ["mongod --dbpath data/"](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#specify-the-path-of-the-data-directory)
-- When you see ["[initandlisten] waiting for connections on port 27017"](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#verify-that-mongodb-has-started-successfully) - which means MongoDB has started successfully
+- When you see ["[initandlisten] waiting for connections on port 27017"](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#verify-that-mongodb-has-started-successfully) - which means MongoDB has started in your computer successfully
 
 ### Step 2: Create a package.json
 - Terminal => rest-api-practice => npm init -y
@@ -14,18 +14,28 @@
 
 ### Step 4: Create a file "index.js"
 - Since inside package.json, "main": "index.js" => which means the base will start from index.js
+Inside index.js:
 ```
 const express = require('express');
 
 //set up express app
 const app = express();
 
+app.get('/api',function(req, res){
+  console.log('GET request');
+  res.send({name: 'Tien'})
+});
+
 //listen for request
-app.listen(4000, function(){
+app.listen(process.env.port || 4000, function(){
   console.log('now listening for requests');
 })
-
 ```
+### Step 5: Create a directory - named "routes" with a file - named "api.js"
+
+
+## Install nodemon (to limit the extra steps running node src/index.js and localhost:4000/api) - if you want
+- npm install nodemon --save-dev
 
 ## API: Application Programming Interface
 ## REST: REpresentational State Transfer 
