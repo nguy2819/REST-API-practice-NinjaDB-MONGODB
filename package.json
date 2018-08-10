@@ -4,6 +4,7 @@
   "description": "- If you use macOS, in your terminal, typed \"cd/\" - It will go to \"/ borlandtien$\" (your home based on your personal computer's name) - Then \"mkdir data\" or \"sudo mkdir data\" (force to make a directory - named data) - [\"mongod --dbpath data/\"](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#specify-the-path-of-the-data-directory) - When you see \"[initandlisten] waiting for connections on port 27017\" - which means MongoDB has started successfully",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3"
   },
   "devDependencies": {

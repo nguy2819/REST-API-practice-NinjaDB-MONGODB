@@ -1,7 +1,16 @@
 const express = require('express');
+const routes = require('../routes/api');
+const bodyParser = require('body-parser');
 
 //set up express app
 const app = express();
+
+app.use(bodyParser.json()); //it will reach middleware bodyParser first, then middleware routes later
+
+app.use('/api', routes);
+//OR if we lazy to const routes = require('../routes/api'), 
+//we can type this way: app.use('api', require('../routes/api'));
+
 
 app.get('/api',function(req, res){
   console.log('GET request'); //2nd: browser -> localhost:4000/api -> it will send back to terminal GET request
@@ -10,17 +19,6 @@ app.get('/api',function(req, res){
   res.send({name: 'Tien'}) //run again from begining, 1st node src/index.js; then 2nd localhost:4000/api => we will see on the page appears {name: 'Tien'} - this means we just requested API sent back that info {name: 'Tien'}
 });
 
-app.post('/api',function(req, res){
-
-})
-
-app.put('/api',function(req, res){
-
-})
-
-app.delete('/api',function(req, res){
-
-})
 
 //listen for request
 app.listen(process.env.port || 4000, function(){
