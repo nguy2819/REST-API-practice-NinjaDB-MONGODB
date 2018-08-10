@@ -132,9 +132,10 @@ router.post('/ninjas',function(req, res){
     "__v": 0
 }
 ```
-- Install, [Robomongo](https://robomongo.org/)
+- Install, [Robomongo](https://robomongo.org/) - cross-platform MongoDB manager
+![screenshot2018-08-10at1 39 54pm](https://user-images.githubusercontent.com/36870689/43978484-9da0a1b8-9ca4-11e8-8b4b-9379ac7c9229.png)
 
-### Step 9: Error Handlling
+### Step 9: Error Handling
 - In api.js, add a middleware ".catch(next)"
 ```
 router.post('/ninjas',function(req, res, next){ 
