@@ -112,7 +112,7 @@ router.post('/ninjas',function(req, res){
     res.send(ninja);
   });
 ```
-- After run in terminal, "node src/index.js", and Postman (http://localhost:4000/api/ninjas), POST-body-raw-JSON with this info:
+- After run in terminal, "nodemon src/index.js", and Postman (http://localhost:4000/api/ninjas), POST-body-raw-JSON with this info:
 ```
 {
 	"name": "Tien",
