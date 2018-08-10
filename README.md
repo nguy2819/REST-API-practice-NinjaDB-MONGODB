@@ -132,7 +132,9 @@ router.post('/ninjas',function(req, res){
     "__v": 0
 }
 ```
-- Install, [Robomongo](https://robomongo.org/)
+- Install, [Robomongo](https://robomongo.org/) - cross-platform MongoDB manager
+![screenshot2018-08-10at1 39 54pm](https://user-images.githubusercontent.com/36870689/43978484-9da0a1b8-9ca4-11e8-8b4b-9379ac7c9229.png)
+
 
 #### Install [nodemon](https://github.com/remy/nodemon) (to limit the extra steps running node src/index.js and localhost:4000/api) - if you want
 - npm install --save-dev nodemon (If installing fail, try this one: [npm install -g nodemon](https://github.com/remy/nodemon))
