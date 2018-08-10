@@ -112,7 +112,7 @@ router.post('/ninjas',function(req, res){
     res.send(ninja);
   });
 ```
-- After run in terminal, "node src/index.js", and Postman (http://localhost:4000/api/ninjas), POST-body-raw-JSON with this info:
+- After run in terminal, "nodemon src/index.js", and Postman (http://localhost:4000/api/ninjas), POST-body-raw-JSON with this info:
 ```
 {
 	"name": "Tien",
@@ -133,6 +133,31 @@ router.post('/ninjas',function(req, res){
 }
 ```
 - Install, [Robomongo](https://robomongo.org/)
+
+### Step 9: Error Handlling
+- In api.js, add a middleware ".catch(next)"
+```
+router.post('/ninjas',function(req, res, next){ 
+    Ninja.create(req.body).then(function(ninja){ 
+        res.send(ninja);
+    }).catch(next);
+  });
+```
+
+#### Middleware in this project
+- In index.js file:
+```
+//1st Middleware
+app.use(bodyParser.json()); 
+
+//2nd Middleware
+app.use('/api', routes);
+
+//3rd Middleware
+app.use(function(err, req, res, next){
+  res.status(422).send({error: err.message}); 
+});//this will response back to the client that there is/are some requirement info that the client forget to submit - according to the file ninja.js (name, nationality, relationship, available)
+```
 
 #### Install [nodemon](https://github.com/remy/nodemon) (to limit the extra steps running node src/index.js and localhost:4000/api) - if you want
 - npm install --save-dev nodemon (If installing fail, try this one: [npm install -g nodemon](https://github.com/remy/nodemon))

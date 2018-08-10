@@ -10,12 +10,18 @@ const app = express();
 mongoose.connect('mongodb://localhost/ninjago');
 mongoose.Promise = global.Promise;
 
+//1st Middleware
 app.use(bodyParser.json()); //it will reach middleware bodyParser first, then middleware routes later
 
+//2nd Middleware
 app.use('/api', routes);
 //OR if we lazy to const routes = require('../routes/api'), 
 //we can type this way: app.use('api', require('../routes/api'));
 
+//3rd Middleware
+app.use(function(err, req, res, next){
+  res.status(422).send({error: err.message});
+});
 
 app.get('/api',function(req, res){
   console.log('GET request'); //2nd: browser -> localhost:4000/api -> it will send back to terminal GET request
