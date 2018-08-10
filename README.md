@@ -135,7 +135,6 @@ router.post('/ninjas',function(req, res){
 - Install, [Robomongo](https://robomongo.org/) - cross-platform MongoDB manager
 ![screenshot2018-08-10at1 39 54pm](https://user-images.githubusercontent.com/36870689/43978484-9da0a1b8-9ca4-11e8-8b4b-9379ac7c9229.png)
 
-<<<<<<< HEAD
 ### Step 9: Error Handling
 - In api.js, add a middleware ".catch(next)"
 ```
@@ -144,6 +143,18 @@ router.post('/ninjas',function(req, res, next){
         res.send(ninja);
     }).catch(next);
   });
+```
+
+### Step 10: DELETE Requests
+- In api.js:
+```
+const Ninja = require('../models/ninja');
+
+router.delete('/ninjas/:id', function(req, res, next){
+    Ninja.findByIdAndRemove({_id: req.params.id}).then(function(ninja){
+      res.send(ninja);
+    });
+});
 ```
 
 #### Middleware in this project
@@ -160,8 +171,6 @@ app.use(function(err, req, res, next){
   res.status(422).send({error: err.message}); 
 });//this will response back to the client that there is/are some requirement info that the client forget to submit - according to the file ninja.js (name, nationality, relationship, available)
 ```
-=======
->>>>>>> b6333fc1ea54005bf1f8ba84996c0a174398244f
 
 #### Install [nodemon](https://github.com/remy/nodemon) (to limit the extra steps running node src/index.js and localhost:4000/api) - if you want
 - npm install --save-dev nodemon (If installing fail, try this one: [npm install -g nodemon](https://github.com/remy/nodemon))
