@@ -16,11 +16,11 @@
 - Since inside package.json, "main": "index.js" => which means the base will start from index.js
 * Inside index.js:
 ```
-const express = require('express');
+[const express = require('express');](https://expressjs.com/en/4x/api.html#express)
 const routes = require('../routes/api'); //import routes/api.js to use in index.js
 
 //set up express app
-const app = express();
+[const app = express();](https://expressjs.com/en/4x/api.html#express)
 app.use('/api', routes); //we added this line so that the index.js knows we will import everything from api.js into this for using - also in api.js, we were lazy in typing /api/ninjas, etc. so that the 'api' in front of routes will forcing every routes started with /ninjas will have /api in front.
 
 app.get('/api',function(req, res){
@@ -36,7 +36,7 @@ app.listen(process.env.port || 4000, function(){
 ### Step 5: Create a directory - named "routes" with a file - named "api.js"
 ```
 const express = require('express');
-const router = express.Router();
+[const router = express.Router();](https://expressjs.com/en/4x/api.html#express.router)
 
 //get a list of ninjas from the db
 router.get('/ninjas',function(req, res){
@@ -61,9 +61,83 @@ router.post('/ninjas',function(req, res){ //Use Postman to POST info to Body (un
   }); //res.send will send the data I posted on Postman back to Client (ex: { type: 'POST', nationality: 'Vietnam', relationship: 'married' })
 ```
 
+### Step 7: Install [Mongoose](http://mongoosejs.com/docs/)
+- npm install mongoose --save
+- Adds a layer of methods to easily save, edit, retreive, and delete data from MongoDB
+- Allows us to create our Models and Schemas easily
+- Created directory (named models) and a file init (named ninja.js):
+```
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+//create Ninja Schema
+const NinjaSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'Name field is required'],
+    },
+    nationality: {
+        type: String
+    },
+    relationship: {
+        type: String
+    },
+    available: {
+        type: Boolean,
+        default: false
+    }
+});
+
+//create Ninja model
+const Ninja = mongoose.model('ninja', NinjaSchema);
+
+module.exports = Ninja;
+```
+### Step 8: Connect MongoDB
+- In index.js: 
+```
+const mongoose = require('mongoose');
+
+//connect to MongoDB
+mongoose.connect('mongodb://localhost/ninjago')
+```
+- In api.js:
+```
+const Ninja = require('../models/ninja');
+
+router.post('/ninjas',function(req, res){
+    // var ninja = new Ninja(req.body);
+    // ninja.save();
+    Ninja.create(req.body); //Instead of making 2 lines above, we only need to use this line, they will understand both create and save into Ninja model DB.
+    res.send(ninja);
+  });
+```
+- After run in terminal, "node src/index.js", and Postman (http://localhost:4000/api/ninjas), POST-body-raw-JSON with this info:
+```
+{
+	"name": "Tien",
+	"nationality": "Vietnam",
+	"relationship": "married",
+	"available": true
+}
+```
+- res.send(ninja) will send back to client this info:
+```
+{
+    "available": true,
+    "_id": "5b6dd377e04ccc9f59e295e8",
+    "name": "Tien",
+    "nationality": "Vietnam",
+    "relationship": "married",
+    "__v": 0
+}
+```
+- Install, [Robomongo](https://robomongo.org/)
+
 #### Install [nodemon](https://github.com/remy/nodemon) (to limit the extra steps running node src/index.js and localhost:4000/api) - if you want
 - npm install --save-dev nodemon (If installing fail, try this one: [npm install -g nodemon](https://github.com/remy/nodemon))
 - nodemon src/index.js
+
 
 ## API: Application Programming Interface
 ## REST: REpresentational State Transfer 
@@ -82,5 +156,13 @@ router.post('/ninjas',function(req, res){ //Use Postman to POST info to Body (un
 
 ## HTTP Status Codes:
 - Ex: 200 means OK; 404 means Resource Not Found; 500 means server error
+
+## Schemas
+- Define the structure of our data objects
+- For example: string or number or boolean. {name: String, rank: String, availability: Boolean}
+
+## Models
+- Represent collections in MongoDB
+- Ex: User Model to represent a collection of Users/ Ninja Model to represent a collection of Ninjas
 
 * REST-API TUTORIAL from [The Net Ninja](https://www.youtube.com/watch?v=BRdcRFvuqsE&list=PL4cUxeGkcC9jBcybHMTIia56aV21o2cZ8)
