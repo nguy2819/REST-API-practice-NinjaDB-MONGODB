@@ -132,6 +132,8 @@ router.post('/ninjas',function(req, res){
     "__v": 0
 }
 ```
+![screen shot 2018-08-10 at 3 35 29 pm](https://user-images.githubusercontent.com/36870689/43982458-3d8b878e-9cb3-11e8-8c2b-bb9ae5f9a4e0.png)
+
 - Install, [Robomongo](https://robomongo.org/) - cross-platform MongoDB manager
 ![screenshot2018-08-10at1 39 54pm](https://user-images.githubusercontent.com/36870689/43978484-9da0a1b8-9ca4-11e8-8b4b-9379ac7c9229.png)
 
@@ -156,6 +158,29 @@ router.delete('/ninjas/:id', function(req, res, next){
     });
 });
 ```
+- Because every ninja has it's own id, we can see it through robomongo
+![screen shot 2018-08-10 at 2 38 47 pm](https://user-images.githubusercontent.com/36870689/43980548-d45fb052-9cab-11e8-80bf-a341d49fd4f0.png)
+- After copy the id of the ninja you want to delete, paste it over Postman
+![screen shot 2018-08-10 at 2 46 41 pm](https://user-images.githubusercontent.com/36870689/43980661-440d9590-9cac-11e8-88bb-60efbe29271e.png)
+- Then click SEND, we will see the box at the end shows the info of the ninja that we want to delete
+![screen shot 2018-08-10 at 2 46 01 pm](https://user-images.githubusercontent.com/36870689/43980667-4faec1f8-9cac-11e8-8d4b-e83a767fd574.png)
+- Finally, we check the Robomongo DB to see if we delete the ninja (with id above) successful or not, and yes, it works successfully
+![screen shot 2018-08-10 at 2 48 45 pm](https://user-images.githubusercontent.com/36870689/43980740-87e20364-9cac-11e8-8171-c70676a3d699.png)
+
+### Step 11: PUT Requests
+- In api.js:
+```
+//update a ninja in the db
+router.put('/ninjas/:id',function(req, res, next){
+    Ninja.findByIdAndUpdate({_id: req.params.id}, req.body).then(function(){
+        Ninja.findOne({_id: req.params.id}).then(function(ninja){
+            res.send(ninja);
+        })
+    })
+  });
+```
+![screen shot 2018-08-10 at 3 39 33 pm](https://user-images.githubusercontent.com/36870689/43982549-9c839a24-9cb3-11e8-9fd0-7d588930f122.png)
+
 
 #### Middleware in this project
 - In index.js file:
