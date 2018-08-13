@@ -1,3 +1,6 @@
+![screen shot 2018-08-13 at 9 45 21 am](https://user-images.githubusercontent.com/36870689/44042535-bed43378-9edd-11e8-8758-3934fc37b0c7.png)
+The picture is from [REST-API-TUTORIAL of The Net Ninja](https://www.youtube.com/watch?v=fGQFeV32nwE&list=PL4cUxeGkcC9jBcybHMTIia56aV21o2cZ8&index=16) 
+
 ### Step 1: Download MongoDB
 - If you use macOS, in your terminal, typed "cd/"
 - It will go to "/ borlandtien$" (your home based on your personal computer's name)
@@ -97,6 +100,7 @@ module.exports = Ninja;
 - In index.js: 
 ```
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 //connect to MongoDB
 mongoose.connect('mongodb://localhost/ninjago')
@@ -181,17 +185,98 @@ router.put('/ninjas/:id',function(req, res, next){
 ```
 ![screen shot 2018-08-10 at 3 39 33 pm](https://user-images.githubusercontent.com/36870689/43982549-9c839a24-9cb3-11e8-9fd0-7d588930f122.png)
 
+### Step 12: [GEOJSON](http://geojson.org/) [GEOLOCATION](https://www.youtube.com/watch?v=KSf417F3ui0)
+>"geometry": {
+>    "type": "Point",
+>    "coordinates": [125.6, 10.1]
+>  },
+- In ninja.js
+```
+//Create a geo location Schema
+const GeoSchema = new Schema({
+    type: {
+        type: String,
+        default: "Point"
+    },
+    coordinates: {
+        type: [Number],
+        index: "2dsphere"
+    }
+});
+
+//create Ninja Schema
+const NinjaSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'Name field is required'],
+    },
+    nationality: {
+        type: String
+    },
+    relationship: {
+        type: String
+    },
+    available: {
+        type: Boolean,
+        default: false
+    },
+    geometry: GeoSchema
+});
+```
+
+- In api.js, (the geoNear will help us find the Ninja that is closed to us when we do GET REQUEST)
+```
+router.get('/ninjas',function(req, res, next){
+    Ninja.geoNear(
+        {type: 'Point', coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]},
+        {maxDistance: 1000000, spherical: true}
+    ).then(function(ninjas){
+        res.send(ninjas);
+    });
+});
+```
+
+### Step 13: Create FRONT-END
+- In index.js
+```
+app.use(express.static('public'));
+```
+- Create a "public" folder and 2 files - named "index.html" and "style.css"
+![screen shot 2018-08-13 at 10 01 16 am](https://user-images.githubusercontent.com/36870689/44043371-f0eb0628-9edf-11e8-98a2-140d8f07b00a.png)
+![screen shot 2018-08-13 at 10 02 31 am](https://user-images.githubusercontent.com/36870689/44043405-0a94f282-9ee0-11e8-871a-897680f9cb5c.png)
+- In index.html
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ninjago practice</title>
+        <link href="https://http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+        <link href="style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <h1 class="title">Ninjago - a Ninja REST API</h1>
+        <div id="homepage">
+            <h1>Check ninja list</h1>
+            <div id="ninjas"></div>
+        </div>
+    </body>
+</html>
+```
 
 #### Middleware in this project
 - In index.js file:
 ```
 //1st Middleware
-app.use(bodyParser.json()); 
+app.use(express.static('public'));
 
 //2nd Middleware
-app.use('/api', routes);
+app.use(bodyParser.json());
 
 //3rd Middleware
+app.use('/api', routes);
+
+//4th Middleware
 app.use(function(err, req, res, next){
   res.status(422).send({error: err.message}); 
 });//this will response back to the client that there is/are some requirement info that the client forget to submit - according to the file ninja.js (name, nationality, relationship, available)
